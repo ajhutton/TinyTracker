@@ -17,3 +17,4 @@ Attributions
 ------------
 -	Mikal Hart for the TinyGPS library (http://arduiniana.org/libraries/tinygps/)
 -	Will Duckworth for his RTTY library (http://wdhab.blogspot.com/2011/11/rtty-library-for-arduino.html)
+-	Darkside of Project Horus (http://projecthorus.org) for all of his advice, cheap hardware and additional code.
