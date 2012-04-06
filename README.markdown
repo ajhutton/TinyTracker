@@ -5,7 +5,7 @@ This is an open source Arduino-based GPS tracking code. The intended use is the 
 
 For more information on high altitude projects like this, visit:
 http://ukhas.org.uk/
-#highaltitude on irc.freenode.net (I can be found here as schofieldau)
+\#highaltitude on irc.freenode.net (I can be found here as schofieldau)
 
 I can be reached via email at me@ajhutton.net
 
