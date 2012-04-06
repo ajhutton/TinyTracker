@@ -1,9 +1,14 @@
 TinyTracker
 ===============
 
-This is an open source Arduino-based GPS tracking code. The intended use is the tracking of an amateur high altitude balloon.
+TinyTracker is an open source Arduino-based GPS tracking program. The intended use is the tracking of an amateur high altitude balloon.
 
-For more information on high altitude projects like this:
+At the moment it's not too "tiny" but the future focus will be on robustness and simplicity. The less complicated a program is, the less likely it is to crash. This is essential in embedded situations
+that operate 35km(!) above sea level with no human interaction.
+
+Further resources
+------------
+
 -	http://ukhas.org.uk/
 -	\#highaltitude on irc.freenode.net (I can be found here as schofieldau)
 -	email me at me@ajhutton.net
