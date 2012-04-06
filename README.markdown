@@ -3,10 +3,10 @@ TinyTracker
 
 This is an open source Arduino-based GPS tracking code. The intended use is the tracking of an amateur high altitude balloon.
 
-For more information on high altitude projects like this, visit:
-\nhttp://ukhas.org.uk/
-\n\#highaltitude on irc.freenode.net (I can be found here as schofieldau)
-\nI can be reached via email at me@ajhutton.net
+For more information on high altitude projects like this:
+-	http://ukhas.org.uk/
+-	\#highaltitude on irc.freenode.net (I can be found here as schofieldau)
+-	email me at me@ajhutton.net
 
 Attributions
 ------------
