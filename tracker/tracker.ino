@@ -12,28 +12,32 @@ by Alex Hutton*/
 //Mark_Pin, Space_Pin, ASCII (7 or 8), Num Stop Bits (1 or 2), Baud (50 or 300)
 RTTY rtty(4,5,7,1,50);
 // rx, tx pins
-SoftwareSerial gpsSerial(0, 1);
+SoftwareSerial debugSerial(8, 9);
 TinyGPS gps;
 //name progress/new skills
 // our sprintf buffer 
 char superbuffer[100]=""; 
-char callsign[]="HUTTON";
+//char callsign[]="HUTTON";
 //we need some vars to hold GPS data in
 unsigned long fix_age, time, date, speed, course, altitude;
 unsigned long chars;
 unsigned short sentences, failed_checksum;
-
+int debug = 1;
 
 //required arduino "setup" routine. this is run on poweron immediately.
 void setup() {
-gpsSerial.begin(4800);
+Serial.begin(9600);
+if(debug = 1) debugSerial.begin(9600);
+pinMode(2, OUTPUT);
 }
 
 //required arduino "loop" routine. this is run after the setup is complete. it loops.
 void loop() {
-  while (gpsSerial.available())
+  while (Serial.available())
   {
-    int c = gpsSerial.read();
+    digitalWrite(2, HIGH);
+    int c = Serial.read();
+    if (debug = 1) debugSerial.write(c);
     if (gps.encode(c))
     {
 //process data
@@ -45,7 +49,9 @@ void loop() {
       course = gps.course();
 //printf works like printf ("%d, %d, %d, %d, %d", 1Value, 2Value, , ,);
 //$$<CALL SIGN>,<COUNTER D>,<TIME HH:MM:SS>,<LATITUDE DD.DDDDDD>,<LONGITUDE DD.DDDDDD>,<ALTITUDE METRES MMMMM>*<CHECKSUM><NEWLINE>
-sprintf(superbuffer,"$$%d, %d, %d, %d, %d*%d",callsign,sentences,time,lat,lon,altitude);
+char sent = sprintf(superbuffer,"$$HUTTON,%d,%d,%d,%d,%d",sentences,time,lat,lon,altitude);
+
+if (debug = 1) debugSerial.println(); debugSerial.println(superbuffer);
     }
   }
 
