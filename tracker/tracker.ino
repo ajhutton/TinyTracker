@@ -20,7 +20,7 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 #include "TinyGPS.h"
-#include "RTTY.h"
+//#include "RTTY.h"
 //CONFIG
 //RTTY CONFIG
 int    MARK     = 4; //RTTY MARK pin
@@ -29,7 +29,7 @@ int    ASCII    = 7; //ASCII = 7 or 8
 int    STOPBITS = 1; //STOPBITS = 1 or 2
 int    BAUD     = 50;//BAUD = 50 or 300
 //DEBUG CONFIG
-int    debug    = 1; //debugging to software serial config (0=off, 1=only print rtty sentences, 2=echo GPS data as well)
+int    debug    = 2; //debugging to software serial config (0=off, 1=only print rtty sentences, 2=echo GPS data as well)
 int    debugRX  = 8; //DEBUG software serial RX pin
 int    debugTX  = 9; //DEBUG software serial TX pin
 int    dbgBaud  = 9600;//DEBUG software serial baud rate
@@ -47,14 +47,17 @@ unsigned short sentences, failed_checksum;
 long lat, lon;
 
 //Setup objects
-RTTY rtty(MARK,SPACE,ASCII,STOPBITS,BAUD);
+//RTTY rtty(MARK,SPACE,ASCII,STOPBITS,BAUD);
 TinyGPS gps;
 SoftwareSerial debugSerial(debugRX, debugTX);
 
 void setup() {
+  pinMode(13, OUTPUT);
 Serial.begin(gpsBaud);
 if(debug > 0) {
+  digitalWrite(13, HIGH);
   debugSerial.begin(9600);
+  delay(2000);
   debugSerial.print("Level ");
   debugSerial.print(debug);
   debugSerial.println(" debugging enabled. Logging to serial");

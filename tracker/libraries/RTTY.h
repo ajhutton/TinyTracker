@@ -1,7 +1,17 @@
 /*
- * RTTY.h
+ * RTTY.cpp
+ * Version 0.1 - http://www.timzaman.com/
+ * Copyright (c) 2011 Tim Zaman
+ * All rights reserved.
  *
- * Version 1
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -14,33 +24,29 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
-
- * RTTY USB Baud 50/300 XOR checksum code
  *
- * Borrowed from Project Horus (juxta)
- * This code is based on Robert Harrison's RTTY code as used in the Icarus project
- * http://pegasushabproject.org.uk/wiki/doku.php/ideas:notes?s=rtty
- * and based upon the initial work from TimZaman
+ * Code based in part on information from the following:
+ * [J. Coxon, D.Richman]
  */
+ 
+#include <util/twi.h>
+#include "WProgram.h"
 
 #ifndef RTTY_h
 #define RTTY_h
 
-#include "WProgram.h"
-
-class RTTY
+class RTTY5
 {
   public:
-    RTTY(byte RTTY_mark,byte RTTY_space,int RTTY_ascii,int RTTY_stop, int RTTY_baud);
-    void TxString(char *string);
-    int txCount();
+    RTTY5();
+	void attach(int pina, int pinb);
+	void tx (char * string);
   private:
-    byte _RTTY_PIN_1,_RTTY_PIN_2;
-    int _RTTY_ASCII,_RTTY_STOP, _RTTY_baud;
-    void rtty_txstring (char *string);
     void rtty_txbyte (char c);
     void rtty_txbit (int bit);
-    int getCheckSum(char *string);
+
 };
 
-#endif
+extern RTTY5 RTTY;
+
+#endif // RTTY_h
