@@ -66,6 +66,7 @@ char longString[12];
 
 //setup
 void setup() {
+  //pin modes
   pinMode(PIN_RTTY_ENABLE, OUTPUT);
   pinMode(PIN_RTTY_SPACE, OUTPUT);
   pinMode(PIN_RTTY_MARK, OUTPUT); 
@@ -74,22 +75,25 @@ void setup() {
   digitalWrite(PIN_RTTY_MARK, HIGH);
   digitalWrite(PIN_RTTY_SPACE, LOW);
   digitalWrite(PIN_PWR_LED, LOW);
-
-  if(debug > 0) debugSerial.begin(9600);
+  
+  
+  if(debug > 0) debugSerial.begin(debugBaud); //if debug is enabled, set up the software serial port
+  
   debugPrint("BOOTING. ENABLING GPS SERIAL");
-  Serial.begin(gpsBaud);
+  Serial.begin(gpsBaud); //set up the GPS serial port
   debugPrint("SERIAL ENABLED");
+  
   debugPrint("CONFIG NMEA");
-  configNMEA();
+  configNMEA(); //disable all the NMEA crap we don't need (because we're using polling here)
   debugPrint("NMEA CONFIGURED");
 }
 
+
 void loop() {
-  getGPS();
-  genSentence();
-  debugPrint(txBuffer);
-  txString(txBuffer);
-  delay(1000);
+  getGPS(); //polls the GPS and parses the data into the GPS data variables
+  genSentence(); //takes the data and generates a sentence for transmission (eg; $$HUTTON,1,03:47:22,35.40024,-40.12334,6,10,0,0,0)
+  debugPrint(txBuffer); //if debugging is enabled, sends the resulting sentence to the debug serial port
+  txString(txBuffer); //finally, call the RTTY routine to checksum and then transmit the sentence.
 }
 
 void genSentence() {
@@ -103,16 +107,7 @@ void genSentence() {
 }
 
 void debugPrint(String msg) {
-  if(debug != 0) {
-    //         sprintf(debugBuffer, "[%u]%s", millis(), msg); 
-   // debugSerial.print("[");
-   // debugSerial.print(millis());
-  //  debugSerial.print("]");
-    debugSerial.println(msg);
-
-    //          debugSerial.println(debugBuffer);
-
-  }
+  if(debug != 0) debugSerial.println(msg);
 }
 
 void getGPS() {
